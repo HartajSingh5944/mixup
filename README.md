@@ -29,12 +29,10 @@ Update `server/.env` with your `MONGO_URI` and `JWT_SECRET`.
 To enable live external event listings on the map, also set:
 
 ```bash
-TICKETMASTER_API_KEY=your_ticketmaster_api_key
 SERPAPI_API_KEY=your_serpapi_key
 ```
 
-If `TICKETMASTER_API_KEY` is omitted, the map will not show external event listings.
-If `SERPAPI_API_KEY` is set, authenticated users can import Google Events search results as templates while creating new MixUp events.
+If `SERPAPI_API_KEY` is set, the map can show external Google Events results and authenticated users can import Google Events search results as templates while creating new MixUp events.
 
 ## Run
 
