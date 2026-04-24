@@ -1,0 +1,434 @@
+@import 'leaflet/dist/leaflet.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html,
+body,
+#root {
+  min-height: 100%;
+}
+
+:root {
+  color-scheme: light;
+  --app-bg: #f7f7f4;
+  --app-bg-elevated: #ffffff;
+  --app-bg-soft: #f8fafc;
+  --app-border: rgba(148, 163, 184, 0.28);
+  --app-text: #111827;
+  --app-text-muted: #475569;
+  --app-text-soft: #64748b;
+  --glass-border: rgba(255, 255, 255, 0.7);
+  --glass-surface: linear-gradient(135deg, rgba(255, 255, 255, 0.72), rgba(255, 255, 255, 0.38));
+  --glass-accent: linear-gradient(120deg, rgba(45, 212, 191, 0.12), rgba(249, 115, 91, 0.14));
+  --glass-shadow:
+    0 24px 60px rgba(17, 24, 39, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.85),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.28);
+}
+
+html.dark {
+  color-scheme: dark;
+  --app-bg: #08111a;
+  --app-bg-elevated: #111c27;
+  --app-bg-soft: #0f1722;
+  --app-border: rgba(148, 163, 184, 0.18);
+  --app-text: #e5eef7;
+  --app-text-muted: #cbd5e1;
+  --app-text-soft: #94a3b8;
+  --glass-border: rgba(255, 255, 255, 0.08);
+  --glass-surface: linear-gradient(135deg, rgba(15, 23, 34, 0.9), rgba(15, 23, 34, 0.66));
+  --glass-accent: linear-gradient(120deg, rgba(45, 212, 191, 0.18), rgba(249, 115, 91, 0.16));
+  --glass-shadow:
+    0 24px 60px rgba(0, 0, 0, 0.38),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.04);
+}
+
+body {
+  margin: 0;
+  background: var(--app-bg);
+  color: var(--app-text);
+  transition:
+    background-color 180ms ease,
+    color 180ms ease;
+}
+
+.liquid-glass {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid var(--glass-border);
+  background: var(--glass-surface), var(--glass-accent);
+  box-shadow: var(--glass-shadow);
+  backdrop-filter: blur(24px) saturate(150%);
+}
+
+.liquid-glass::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at top left, rgba(255, 255, 255, 0.7), transparent 36%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.28), transparent 48%);
+  pointer-events: none;
+}
+
+html.dark .liquid-glass::before {
+  background:
+    radial-gradient(circle at top left, rgba(255, 255, 255, 0.1), transparent 34%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.08), transparent 48%);
+}
+
+.hero-backdrop {
+  background:
+    radial-gradient(circle at top left, rgba(45, 212, 191, 0.26), transparent 34%),
+    radial-gradient(circle at top right, rgba(249, 115, 91, 0.28), transparent 42%),
+    linear-gradient(180deg, #fffdf8 0%, #f7f7f4 72%);
+}
+
+.hero-stage-shell::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 2.5rem;
+  background:
+    linear-gradient(155deg, rgba(255, 255, 255, 0.56), rgba(255, 255, 255, 0.2)),
+    linear-gradient(135deg, rgba(45, 212, 191, 0.08), rgba(249, 115, 91, 0.08));
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.65),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.18);
+  pointer-events: none;
+}
+
+.hero-stage {
+  position: relative;
+  border: 1px solid var(--glass-border);
+  background:
+    linear-gradient(155deg, rgba(255, 255, 255, 0.72), rgba(255, 255, 255, 0.34)),
+    linear-gradient(135deg, rgba(45, 212, 191, 0.12), rgba(249, 115, 91, 0.12));
+  box-shadow:
+    0 30px 90px rgba(17, 24, 39, 0.14),
+    inset 0 1px 0 rgba(255, 255, 255, 0.72),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.22);
+  backdrop-filter: blur(30px) saturate(145%);
+}
+
+.hero-stage::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at top left, rgba(255, 255, 255, 0.72), transparent 28%),
+    radial-gradient(circle at top right, rgba(255, 255, 255, 0.24), transparent 24%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.22), transparent 26%);
+  pointer-events: none;
+}
+
+.hero-glass {
+  border: 1px solid var(--glass-border);
+  background:
+    linear-gradient(160deg, rgba(255, 255, 255, 0.82), rgba(255, 255, 255, 0.58)),
+    linear-gradient(130deg, rgba(45, 212, 191, 0.12), rgba(249, 115, 91, 0.08));
+  box-shadow:
+    0 30px 90px rgba(17, 24, 39, 0.14),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(24px) saturate(150%);
+}
+
+.hero-copy-glass {
+  border: 1px solid var(--glass-border);
+  background:
+    linear-gradient(155deg, rgba(255, 255, 255, 0.76), rgba(255, 255, 255, 0.48)),
+    linear-gradient(135deg, rgba(45, 212, 191, 0.1), rgba(249, 115, 91, 0.08));
+  box-shadow:
+    0 26px 70px rgba(17, 24, 39, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.78);
+  backdrop-filter: blur(22px) saturate(145%);
+}
+
+.hero-glass-inner {
+  background: linear-gradient(145deg, #eaf7f3 0%, #fff5ed 55%, #fffdf8 100%);
+}
+
+.hero-map-chip {
+  background: rgba(255, 255, 255, 0.86);
+  color: #334155;
+  border: 1px solid rgba(255, 255, 255, 0.72);
+}
+
+.nav-pill {
+  color: var(--app-text-muted);
+}
+
+.nav-pill:hover {
+  background: rgba(255, 255, 255, 0.8);
+  color: var(--app-text);
+}
+
+.nav-pill-active {
+  color: #fff !important;
+}
+
+.swipe-card {
+  border: 1px solid rgba(148, 163, 184, 0.22);
+}
+
+.match-action-button {
+  transition:
+    transform 160ms ease,
+    background-color 160ms ease,
+    color 160ms ease,
+    border-color 160ms ease;
+}
+
+.match-action-pass {
+  background: #ffffff;
+  color: #475569;
+}
+
+.match-action-pass:hover {
+  color: #dc2626;
+}
+
+.match-action-like {
+  background: #111827;
+  color: #ffffff;
+}
+
+.match-action-like:hover {
+  background: #f9735b;
+}
+
+.chat-bubble {
+  border: 1px solid transparent;
+}
+
+.chat-bubble-mine {
+  background: #111827;
+  color: #ffffff;
+}
+
+.chat-bubble-theirs {
+  background: #ffffff;
+  color: #111827;
+  border-color: rgba(148, 163, 184, 0.22);
+}
+
+.chat-bubble-time-mine {
+  color: #cbd5e1;
+}
+
+.chat-bubble-time-theirs {
+  color: #64748b;
+}
+
+.scrollbar-none {
+  scrollbar-width: none;
+}
+
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
+}
+
+.leaflet-container {
+  height: 100%;
+  width: 100%;
+}
+
+html.dark .leaflet-container,
+html.dark .leaflet-popup-content-wrapper,
+html.dark .leaflet-popup-tip {
+  background: var(--app-bg-elevated);
+  color: var(--app-text);
+}
+
+html.dark .hero-backdrop {
+  background:
+    radial-gradient(circle at top left, rgba(45, 212, 191, 0.18), transparent 30%),
+    radial-gradient(circle at top right, rgba(249, 115, 91, 0.2), transparent 38%),
+    linear-gradient(180deg, #08111a 0%, #0b1520 72%);
+}
+
+html.dark .hero-stage-shell::before {
+  background:
+    linear-gradient(155deg, rgba(9, 16, 26, 0.52), rgba(15, 25, 36, 0.24)),
+    linear-gradient(135deg, rgba(45, 212, 191, 0.08), rgba(249, 115, 91, 0.08));
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.07),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.03);
+}
+
+html.dark .hero-stage {
+  background:
+    linear-gradient(155deg, rgba(9, 16, 26, 0.88), rgba(15, 25, 36, 0.7)),
+    linear-gradient(135deg, rgba(45, 212, 191, 0.14), rgba(249, 115, 91, 0.14));
+  box-shadow:
+    0 34px 100px rgba(0, 0, 0, 0.38),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.04);
+}
+
+html.dark .hero-stage::before {
+  background:
+    radial-gradient(circle at top left, rgba(255, 255, 255, 0.1), transparent 26%),
+    radial-gradient(circle at top right, rgba(255, 255, 255, 0.05), transparent 22%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.06), transparent 24%);
+}
+
+html.dark .hero-glass {
+  background:
+    linear-gradient(160deg, rgba(10, 18, 28, 0.86), rgba(18, 29, 41, 0.72)),
+    linear-gradient(135deg, rgba(45, 212, 191, 0.16), rgba(249, 115, 91, 0.12));
+  box-shadow:
+    0 30px 90px rgba(0, 0, 0, 0.42),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+html.dark .hero-copy-glass {
+  background:
+    linear-gradient(155deg, rgba(10, 18, 28, 0.82), rgba(19, 30, 42, 0.7)),
+    linear-gradient(135deg, rgba(45, 212, 191, 0.12), rgba(249, 115, 91, 0.1));
+  box-shadow:
+    0 30px 90px rgba(0, 0, 0, 0.34),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+html.dark .hero-glass-inner {
+  background:
+    radial-gradient(circle at top left, rgba(45, 212, 191, 0.12), transparent 32%),
+    linear-gradient(145deg, rgba(12, 22, 32, 0.96), rgba(24, 38, 52, 0.92));
+}
+
+html.dark .hero-map-chip {
+  background: rgba(10, 18, 28, 0.82);
+  color: #e5eef7;
+  border-color: rgba(148, 163, 184, 0.18);
+}
+
+html.dark .nav-pill:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+html.dark .swipe-card {
+  border-color: rgba(226, 232, 240, 0.16);
+  box-shadow:
+    0 20px 45px rgba(0, 0, 0, 0.34),
+    inset 0 1px 0 rgba(255, 255, 255, 0.04);
+}
+
+html.dark .match-action-pass {
+  background: #172330;
+  color: #e2e8f0;
+  border: 1px solid rgba(148, 163, 184, 0.2);
+}
+
+html.dark .match-action-pass:hover {
+  background: #24151a;
+  color: #fca5a5;
+  border-color: rgba(248, 113, 113, 0.28);
+}
+
+html.dark .match-action-like {
+  background: linear-gradient(135deg, #f9735b, #fb8f7d);
+  color: #ffffff;
+  border: 1px solid rgba(249, 115, 91, 0.28);
+}
+
+html.dark .match-action-like:hover {
+  background: linear-gradient(135deg, #fb8f7d, #f9735b);
+}
+
+html.dark .chat-bubble-mine {
+  background: linear-gradient(135deg, #f9735b, #fb8f7d);
+  color: #ffffff;
+  border-color: rgba(249, 115, 91, 0.24);
+}
+
+html.dark .chat-bubble-theirs {
+  background: #182532;
+  color: #e5eef7;
+  border-color: rgba(148, 163, 184, 0.18);
+}
+
+html.dark .chat-bubble-time-mine {
+  color: rgba(255, 244, 241, 0.82);
+}
+
+html.dark .chat-bubble-time-theirs {
+  color: #94a3b8;
+}
+
+html.dark .bg-\[\#f7f7f4\],
+html.dark .bg-white,
+html.dark .bg-white\/80,
+html.dark .bg-white\/75,
+html.dark .bg-white\/70,
+html.dark .bg-white\/65,
+html.dark .bg-white\/45,
+html.dark .bg-slate-50,
+html.dark .bg-slate-50\/70,
+html.dark .bg-slate-50\/80,
+html.dark .bg-slate-100 {
+  background-color: var(--app-bg-elevated) !important;
+}
+
+html.dark .border-slate-200,
+html.dark .border-slate-300,
+html.dark .border-white\/80,
+html.dark .border-white\/70,
+html.dark .border-white\/60,
+html.dark .border-white\/15,
+html.dark .border-white\/10 {
+  border-color: var(--app-border) !important;
+}
+
+html.dark .text-ink,
+html.dark .text-slate-700,
+html.dark .text-slate-600,
+html.dark .text-slate-500 {
+  color: var(--app-text-muted) !important;
+}
+
+html.dark .text-ink,
+html.dark h1,
+html.dark h2,
+html.dark h3,
+html.dark h4,
+html.dark h5,
+html.dark h6 {
+  color: var(--app-text) !important;
+}
+
+html.dark .shadow-soft,
+html.dark .shadow-sm,
+html.dark .shadow-\[0_20px_60px_rgba\(17\2c 24\2c 39\2c \.10\)\],
+html.dark .shadow-\[0_16px_40px_rgba\(17\2c 24\2c 39\2c \.08\)\],
+html.dark .shadow-\[0_18px_45px_rgba\(17\2c 24\2c 39\2c \.08\)\],
+html.dark .shadow-\[0_30px_90px_rgba\(17\2c 24\2c 39\2c \.14\)\],
+html.dark .shadow-\[0_30px_90px_rgba\(17\2c 24\2c 39\2c \.18\)\] {
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.32) !important;
+}
+
+html.dark input,
+html.dark textarea,
+html.dark select {
+  background: var(--app-bg-soft);
+  color: var(--app-text);
+  border-color: var(--app-border);
+}
+
+html.dark input::placeholder,
+html.dark textarea::placeholder {
+  color: var(--app-text-soft);
+}
+
+html.dark .bg-\[linear-gradient\(160deg\2c rgba\(255\2c 255\2c 255\2c \.82\)\2c rgba\(255\2c 255\2c 255\2c \.58\)\)\],
+html.dark .bg-\[linear-gradient\(145deg\2c \#eaf7f3_0\%\2c \#fff5ed_55\%\2c \#fffdf8_100\%\)\] {
+  background-image: linear-gradient(145deg, rgba(15, 23, 34, 0.92), rgba(25, 38, 50, 0.85)) !important;
+}
+
+html.dark .bg-\[\#dfeee9\],
+html.dark .bg-\[\#e9efe9\] {
+  background-color: #16232d !important;
+}

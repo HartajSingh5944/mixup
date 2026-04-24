@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
+  <defs>
+    <linearGradient id="mixup-bg" x1="10" y1="8" x2="54" y2="56" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#2DD4BF" />
+      <stop offset="1" stop-color="#F9735B" />
+    </linearGradient>
+    <linearGradient id="mixup-mark" x1="18" y1="18" x2="46" y2="46" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FFF8F2" />
+      <stop offset="1" stop-color="#FFFFFF" />
+    </linearGradient>
+  </defs>
+  <rect x="4" y="4" width="56" height="56" rx="18" fill="#101826" />
+  <rect x="6" y="6" width="52" height="52" rx="16" fill="url(#mixup-bg)" />
+  <path
+    d="M18 21.5C18 18.4624 20.4624 16 23.5 16H26.7218C28.1804 16 29.5793 16.5795 30.6109 17.6109L32 19L33.3891 17.6109C34.4207 16.5795 35.8196 16 37.2782 16H40.5C43.5376 16 46 18.4624 46 21.5V24.7218C46 26.1804 45.4205 27.5793 44.3891 28.6109L42.2782 30.7218C41.2468 31.7532 39.8479 32.3327 38.3893 32.3327H36.75L45.1716 40.7544C46.2761 41.8588 46.2761 43.6494 45.1716 44.7539C44.0672 45.8583 42.2766 45.8583 41.1721 44.7539L32 35.5817L22.8278 44.7539C21.7234 45.8583 19.9328 45.8583 18.8284 44.7539C17.7239 43.6494 17.7239 41.8588 18.8284 40.7544L27.25 32.3327H25.6107C24.1521 32.3327 22.7532 31.7532 21.7218 30.7218L19.6109 28.6109C18.5795 27.5793 18 26.1804 18 24.7218V21.5Z"
+    fill="url(#mixup-mark)"
+  />
+</svg>

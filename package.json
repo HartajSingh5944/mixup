@@ -1,0 +1,14 @@
+{
+  "name": "MixUp",
+  "scripts": {
+    "client": "npm --prefix client run dev",
+    "server": "npm --prefix server run dev",
+    "dev": "concurrently \"npm run server\" \"npm run client\""
+  },
+  "dependencies": {
+    "mongodb": "^7.2.0"
+  },
+  "devDependencies": {
+    "concurrently": "^9.2.1"
+  }
+}
